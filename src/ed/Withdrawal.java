@@ -35,21 +35,21 @@ public class Withdrawal extends Transaction
             bankDatabase.debit(getAccountNumber(), amount);
             cashDispenser.dispenseCash(amount); 
             cashDispensed = true; 
-            screen.messageJLabel7.setText("\nTien cua ban da duoc rut" +
-               " Vui long nhan tien!");
+            screen.messageJLabel7.setText("\nTiền của bạn đã được rút" +
+               " Vui lòng nhận tiền!");
             double newSoDu = bankDatabase.getSoDu(getAccountNumber());
             screen.messageJLabel8.setText("Available Balance: " + newSoDu + "vnd");
             System.out.println("Đã rút: " + amount + "vnd, Tài khoản còn: " + newSoDu + "vnd");
          } else {
             screen.messageJLabel7.setText(
-               "\nXin loi! So tien trong ATM khong du." +
+               "\nXin lỗi! SỐ tiền trong ATM không đủ." +
                "\n\nVui long nhap so tien nho hon.");
             screen.messageJLabel8.setText("Available Balance: " + soDu + "vnd");
          }
       } else {
          screen.messageJLabel7.setText(
-            "\nSo du trong tai khoan khong du." +
-            "\n\nHay chon so nho hon."); 
+            "\nSố dư trong tài khoản không đủ." +
+            "\n\nHãy chọn số nhỏ hơn."); 
          screen.messageJLabel8.setText("Available Balance: " + soDu + "vnd");
       }
    }
@@ -58,7 +58,7 @@ public class Withdrawal extends Transaction
       int userChoice = 0;
       ATMView screen = getScreen(); 
       double initialBalance = getBankDatabase().getSoDu(getAccountNumber());
-      screen.createWithdrawGUI(initialBalance); // Truyền initialBalance
+      screen.createWithdrawGUI(initialBalance); 
       screen.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST);
       withdraw1 check1 = new withdraw1();
       withdraw2 check2 = new withdraw2();

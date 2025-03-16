@@ -31,7 +31,7 @@ public class ATMView extends JFrame
    public JButton messageJLabel4;
    public JButton messageJLabel5;
    public JButton messageJLabel6;
-   public JLabel messageJLabel7; // Đã khai báo
+   public JLabel messageJLabel7;
    public JLabel messageJLabel8;
    public JLabel messageJLabel9;
    public JLabel messageJLabel10;
@@ -116,15 +116,13 @@ public class ATMView extends JFrame
 	      GDChinh.getContentPane().removeAll();
 	      GDChinh.setLayout(new BorderLayout());
 
-	      // Phần trên: Tiêu đề
 	      JPanel topPanel = new JPanel(new FlowLayout());
 	      messageJLabel = new JLabel("Thông Tin Số Dư:");
 	      topPanel.add(messageJLabel);
 	      GDChinh.add(topPanel, BorderLayout.NORTH);
 
-	      // Phần giữa: Hiển thị thông tin số dư trên từng dòng
 	      JPanel infoPanel = new JPanel();
-	      infoPanel.setLayout(new GridLayout(3, 1, 0, 10)); // 3 dòng, cách nhau 10 pixel
+	      infoPanel.setLayout(new GridLayout(3, 1, 0, 10)); 
 
 	      JLabel availableLabel = new JLabel("Available Balance: " + String.format("%,.0f", availableBalance) + "vnd");
 	      JLabel totalLabel = new JLabel("Total Balance: " + String.format("%,.0f", totalBalance) + "vnd");
@@ -133,7 +131,6 @@ public class ATMView extends JFrame
 
 	      GDChinh.add(infoPanel, BorderLayout.CENTER);
 
-	      // Phần dưới cùng: Nút BACK
 	      JPanel bottomPanel = new JPanel(new FlowLayout());
 	      Exit = new JButton("BACK");
 	      bottomPanel.add(Exit);
@@ -146,13 +143,11 @@ public void createWithdrawGUI(double initialBalance) {
     GDChinh.getContentPane().removeAll();
     GDChinh.setLayout(new BorderLayout());
 
-    // Phần trên: Tiêu đề
     JPanel topPanel = new JPanel(new FlowLayout());
     messageJLabel = new JLabel("Lựa Chọn Số Tiền Rút: ");
     topPanel.add(messageJLabel);
     GDChinh.add(topPanel, BorderLayout.NORTH);
 
-    // Phần giữa bên trái: Các nút lựa chọn xếp dọc
     JPanel buttonPanel = new JPanel();
     buttonPanel.setLayout(new GridLayout(6, 1, 0, 10));
     messageJLabel2 = new JButton("1 - 50000vnd");

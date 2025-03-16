@@ -70,7 +70,7 @@ public class ATM
 
    public void authenticateuser(int pin) {
       System.out.println("Đang kiểm tra PIN: " + pin);
-      if (loginAttempts >= 3) {
+      if (loginAttempts > 2) {
          screen.messageJLabel8.setText("Nhập sai mã PIN! Hệ thống tạm khóa trong 30s");
          try {
             Thread.sleep(30000);
@@ -96,7 +96,7 @@ public class ATM
             screen.GDChinh.getContentPane().removeAll();
             screen.GDChinh.revalidate();
             createmenu();
-            screen.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST); // Đặt keypad bên phải
+            screen.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST); 
             screen.GDChinh.repaint();
             screen.GDChinh.revalidate();
          } else {
@@ -159,7 +159,7 @@ public class ATM
 		      keypad.B2.addActionListener(check3);
 		      keypad.B3.addActionListener(check2);
 		      keypad.B4.addActionListener(check4);
-		      screen.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST); // Thêm keypad lại sau khi xóa nội dung
+		      screen.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST); 
 		      screen.GDChinh.revalidate();
 		      screen.GDChinh.repaint();
 		   }
@@ -248,7 +248,7 @@ public class ATM
 		      } else if (type == 2) {
 		         temp = new Withdrawal(currentAccountNumber, screen, bankDatabase, keypad, cashDispenser);
 		      } else if (type == 3) {
-		         screen.setSize(500, 350); // Điều chỉnh kích thước giống createlogin
+		         screen.setSize(500, 350); 
 		         temp = new Deposit(currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
 		      }
 		      return temp;

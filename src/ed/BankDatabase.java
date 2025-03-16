@@ -74,7 +74,7 @@ public class BankDatabase
             return currentAccount.getAccountNumber();
          }
       } 
-      return -1; // Trả về -1 nếu không tìm thấy, thay vì 1 hoặc PIN
+      return -1; 
    }
    
    public static void Adduser() {

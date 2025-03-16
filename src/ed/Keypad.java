@@ -58,7 +58,7 @@ public class Keypad
 
    public JPanel addkeypad() {
       JPanel panel = new JPanel();
-      panel.setPreferredSize(new Dimension(150, 130)); // Giảm kích thước từ (180, 160) xuống (150, 130)
+      panel.setPreferredSize(new Dimension(150, 130)); 
       panel.setBackground(Color.gray);
       panel.setLayout(new FlowLayout()); 
       panel.add(B1);
@@ -78,7 +78,7 @@ public class Keypad
    }
 
    public String userinput(){
-      return userinput(); // Lỗi đệ quy, cần sửa thành getter cho userinput
+      return userinput(); 
    }
 
    public void resetuserinput(){
