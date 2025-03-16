@@ -52,7 +52,7 @@ public class Deposit extends Transaction
    private void NhapTienGui(){
       ATMView screen = getScreen(); 
 
-      screen.CreateDepositGUI(); 
+      screen.createDepositGUI(); 
       screen.GDChinh.add( keypad.addkeypad(), BorderLayout.CENTER);
       Depositcheck check1 = new Depositcheck();  
       keypad.BEnter.addActionListener( check1 );

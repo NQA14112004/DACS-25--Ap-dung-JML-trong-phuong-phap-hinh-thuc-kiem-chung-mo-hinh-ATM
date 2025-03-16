@@ -1,41 +1,39 @@
 package ed;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-
 public class BalanceInquiry extends Transaction
 {
+   private Keypad keypad;
+
    public BalanceInquiry(int userAccountNumber, ATMView atmScreen, 
-      BankDatabase atmBankDatabase)
-   {
+      BankDatabase atmBankDatabase) {
       super(userAccountNumber, atmScreen, atmBankDatabase);
-   } 
+   }
 
    @Override
-   public void execute()
-   {
-      BankDatabase bankDatabase = getBankDatabase();
+   public void execute() {
+      GDSoDu();
+   }
+
+   private void GDSoDu() {
       ATMView screen = getScreen();
-
-      double soDu = 
-         bankDatabase.getSoDu(getAccountNumber());
-
-      double tongDu = 
-         bankDatabase.getTongDu(getAccountNumber());
-      
-      
-      
-      screen.creatBalanceGUI();
-      screen.messageJLabel2.setText("Avaliable Balance: " + soDu);
-      screen.messageJLabel3.setText("Total Balance: " + tongDu);
+      BankDatabase bankDatabase = getBankDatabase();
+      double availableBalance = bankDatabase.getSoDu(getAccountNumber());
+      double totalBalance = bankDatabase.getTongDu(getAccountNumber());
+      screen.createBalanceGUI(availableBalance, totalBalance);
+      Backcheck Back = new Backcheck();
+      screen.Exit.addActionListener(Back);
       screen.GDChinh.revalidate();
-      
-   } 
-   
-  
-} 
+   }
 
-
-
+   private class Backcheck implements ActionListener
+   {
+      public void actionPerformed(ActionEvent e) {
+         ATM atm = ATM.getinstance();
+         atm.createmenu();
+      }
+   }
+}
