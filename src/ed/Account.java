@@ -6,27 +6,17 @@ public class Account
    private int pin;
    private double soDu;
    private double tongDu; 
-   private int admin;
    private String username;
 
    public Account(String Username, int accountNumber, int PIN, 
-      double soDu, double tongDu, int admin)
+      double soDu, double tongDu)
    {
 	  this.username = Username;
       this.accountNumber = accountNumber;
       this.pin = PIN;
       this.soDu = soDu;
       this.tongDu = tongDu;
-      this.admin = admin;
    } 
-
-   public boolean validatePIN(int userPIN)
-   {
-      if (userPIN == getPin())
-         return true;
-      else
-         return false;
-   }
 
    public double getSoDu() {
       return soDu;
@@ -37,11 +27,7 @@ public class Account
    } 
    public int getAccountNumber() {
       return accountNumber;  
-   } 
-   public int getISadmin() {
-	   return getAdmin();  
-   }
-   
+   }   
    public int GetPin() {
 	   return getPin();
    }
@@ -74,12 +60,12 @@ public class Account
 	   this.tongDu = tongDu;
    }
 
-   public int getAdmin() {
-	   return admin;
-   }
-
-   public void setAdmin(int admin) {
-	   this.admin = admin;
+   public boolean validatePIN(int userPIN)
+   {
+      if (userPIN == getPin())
+         return true;
+      else
+         return false;
    }
    public void credit(double amount)
    {

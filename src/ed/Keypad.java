@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Random;
@@ -29,8 +30,11 @@ public class Keypad
    public JButton B8;
    public JButton B9;
    public JButton B0;
+   public JButton space;
    public JButton BClear;
    public JButton BEnter;
+   public JButton BDel;
+   public JButton BExit;
 
    public Keypad() {
       input = new Scanner(System.in);    
@@ -52,15 +56,18 @@ public class Keypad
       B8 = new JButton("8");
       B9 = new JButton("9");
       B0 = new JButton("0");
+      space = new JButton(" ");
       BClear = new JButton("Clear");
       BEnter = new JButton("Enter");
+      BDel = new JButton("Del");
+      BExit = new JButton("Exit");
    }
 
    public JPanel addkeypad() {
       JPanel panel = new JPanel();
-      panel.setPreferredSize(new Dimension(150, 130)); 
+      panel.setPreferredSize(new Dimension(200, 180)); 
       panel.setBackground(Color.gray);
-      panel.setLayout(new FlowLayout()); 
+      panel.setLayout(new GridLayout(5,3)); 
       panel.add(B1);
       panel.add(B2);
       panel.add(B3);
@@ -73,12 +80,15 @@ public class Keypad
       panel.add(BClear);
       panel.add(B0);
       panel.add(BEnter);
+      panel.add(BDel);
+      panel.add(space);
+      panel.add(BExit);
       
       return panel;
    }
 
    public String userinput(){
-      return userinput(); 
+      return userinput; 
    }
 
    public void resetuserinput(){

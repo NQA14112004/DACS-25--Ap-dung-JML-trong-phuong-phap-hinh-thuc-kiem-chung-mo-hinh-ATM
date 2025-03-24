@@ -7,14 +7,12 @@ public class BankDatabase
    static ArrayList<Account> accounts = new ArrayList<Account>(); 
    
    public BankDatabase() {
-      Account acc1 = new Account("acc1", 12345, 111111, 10000000.0, 120000000.0, 0);
-      Account acc2 = new Account("acc2", 98765, 222222, 20000000.0, 200000000.0, 0);
-      Account acc3 = new Account("acc3", 19234, 333333, 20000000.0, 20000000.0, 0);
-      Account acc4 = new Account("admin", 99999, 000000, 0, 0, 1);
+      Account acc1 = new Account("acc1", 12345, 111111, 10000000.0, 120000000.0);
+      Account acc2 = new Account("acc2", 98765, 222222, 20000000.0, 200000000.0);
+      Account acc3 = new Account("acc3", 19234, 333333, 20000000.0, 20000000.0);
       accounts.add(acc1);
       accounts.add(acc2);
       accounts.add(acc3);
-      accounts.add(acc4);
    } 
    
    public Account getAccount(int accountnumber) {
@@ -58,12 +56,7 @@ public class BankDatabase
 
    public void debit(int userAccountNumber, double amount) {
       getAccount(userAccountNumber).debit(amount);
-   }
-
-   public int getadmin(int userAccountNumber) {
-      return getAccountpin(userAccountNumber).getISadmin();  
-   }
-   
+   }  
    public static Iterator createIterator() {
       return new AccountIterator(accounts);
    }
@@ -77,20 +70,4 @@ public class BankDatabase
       return -1; 
    }
    
-   public static void Adduser() {
-      String name = ATMView.Inputfield1.getText();
-      int accountnumber = Integer.parseInt(ATMView.Inputfield2.getText());
-      int pin = Integer.parseInt(ATMView.Inputfield4.getText());
-      int balance = Integer.parseInt(ATMView.Inputfield3.getText());
-      Account newaccount = new Account(name, accountnumber, pin, balance, balance, 0);
-      accounts.add(newaccount);
-      ATMView.Inputfield1.setText("");
-      ATMView.Inputfield2.setText("");
-      ATMView.Inputfield3.setText("");
-      ATMView.Inputfield4.setText("");
-   }
-
-   public static void Deleteuser(int position) {
-      accounts.remove(position);
-   }   
 }

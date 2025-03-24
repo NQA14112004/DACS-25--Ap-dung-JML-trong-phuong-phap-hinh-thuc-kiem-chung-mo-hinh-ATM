@@ -15,12 +15,11 @@ public class ATM
 {
    private boolean userDung; 
    private int currentAccountNumber; 
-   private ATMView screen; 
+   private ATMView atmview; 
    private Keypad keypad; 
    private CashDispenser cashDispenser; 
    private DepositSlot depositSlot; 
    private BankDatabase bankDatabase; 
-   private int AdminCheck;
    private String userinput = "";
    private int position = 0;
    private static ATM uniqueinstance;
@@ -36,7 +35,7 @@ public class ATM
    {
       userDung = false; 
       currentAccountNumber = 0; 
-      screen = new ATMView();      
+      atmview = new ATMView();      
       keypad = new Keypad();
       cashDispenser = new CashDispenser(); 
       depositSlot = new DepositSlot(); 
@@ -51,35 +50,35 @@ public class ATM
    void startlogin() 
    {	   	   
       position = 0;
-      screen.createlogin();
+      atmview.createlogin();
       userinput = "";	   
       authenticate check = new authenticate();
-      screen.GDChinh.revalidate();
-      screen.Inputfield2.setText("");
+      atmview.GDChinh.revalidate();
+      atmview.Inputfield2.setText("");
       keypad.setbuttons();
       addkeypadlisteners();
-      screen.GDChinh.add(keypad.addkeypad(), BorderLayout.CENTER);
-      screen.GDChinh.revalidate();
+      atmview.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST);
+      atmview.GDChinh.revalidate();
       keypad.BEnter.addActionListener(check);
-      screen.GDChinh.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      screen.GDChinh.setSize(500, 350);
-      screen.GDChinh.setVisible(true);
-      screen.GDChinh.revalidate();
-      screen.GDChinh.setLocationRelativeTo(null);
+      atmview.GDChinh.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      atmview.GDChinh.setSize(530, 380);
+      atmview.GDChinh.setVisible(true);
+      atmview.GDChinh.revalidate();
+      atmview.GDChinh.setLocationRelativeTo(null);
    }
 
    public void authenticateuser(int pin) {
       System.out.println("Đang kiểm tra PIN: " + pin);
       if (loginAttempts > 2) {
-         screen.messageJLabel8.setText("Nhập sai mã PIN! Hệ thống tạm khóa trong 30s");
+         atmview.messageJLabel8.setText("Nhập sai mã PIN! Hệ thống tạm khóa trong 30s");
          try {
             Thread.sleep(30000);
          } catch (InterruptedException e) {
             e.printStackTrace();
          }
          loginAttempts = 0;
-         screen.messageJLabel8.setText("Hãy thử lại.");
-         screen.Inputfield2.setText("");
+         atmview.messageJLabel8.setText("Hãy thử lại.");
+         atmview.Inputfield2.setText("");
          return;
       }
 
@@ -90,28 +89,19 @@ public class ATM
          loginAttempts = 0;
          int accountNumber = bankDatabase.getaccpin(pin);
          System.out.println("Số tài khoản tìm được: " + accountNumber);
-         AdminCheck = bankDatabase.getadmin(pin);
-         if (AdminCheck == 0) {
-            currentAccountNumber = accountNumber;
-            screen.GDChinh.getContentPane().removeAll();
-            screen.GDChinh.revalidate();
-            createmenu();
-            screen.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST); 
-            screen.GDChinh.repaint();
-            screen.GDChinh.revalidate();
-         } else {
-            createAdminGUI();
-            Iterator UserIterator = BankDatabase.createIterator(); 
-            Addcheck check = new Addcheck();
-            Deletecheck check2 = new Deletecheck();
-            screen.button2.addActionListener(check);
-            screen.button3.addActionListener(check2);
-         }
+         currentAccountNumber = accountNumber;
+         atmview.GDChinh.getContentPane().removeAll();
+         atmview.GDChinh.revalidate();
+         createmenu();
+         atmview.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST); 
+         atmview.GDChinh.repaint();
+         atmview.GDChinh.revalidate();
+
       } else {
          loginAttempts++;
-         screen.messageJLabel8.setText(
+         atmview.messageJLabel8.setText(
             "Sai mã PIN. Bạn còn " + (3 - loginAttempts) + " lần thử.");
-         screen.Inputfield2.setText("");
+         atmview.Inputfield2.setText("");
       }
    } 
 
@@ -119,49 +109,37 @@ public class ATM
    {
       public void actionPerformed(ActionEvent e) {
          try {
-            int PIN = Integer.parseInt(screen.Inputfield2.getText());
+            int PIN = Integer.parseInt(atmview.Inputfield2.getText());
             authenticateuser(PIN);
          } catch (NumberFormatException ex) {
-            screen.messageJLabel8.setText("Vui lòng nhập mã PIN hợp lệ.");
-            screen.Inputfield2.setText("");
+            atmview.messageJLabel8.setText("Vui lòng nhập mã PIN hợp lệ.");
+            atmview.Inputfield2.setText("");
          }
       }
    }
-	   private class Addcheck implements ActionListener
-	   {
-	      public void actionPerformed( ActionEvent e )
-	      {
-	   	      BankDatabase.Adduser();
-	         
-	      }
-	   }
-	   private class Deletecheck implements ActionListener
-	   {
-	      public void actionPerformed( ActionEvent e )
-	      {
-	   	      BankDatabase.Deleteuser(position);
-	   	      position = position - 1;
-	         
-	      }
-	   }
+	  
 	   public void createmenu() {
-		      screen.setSize(400, 300);
+		      atmview.setSize(400, 300);
 		      balancecheck check1 = new balancecheck();
 		      Depositcheck check2 = new Depositcheck();
 		      Withdrawcheck check3 = new Withdrawcheck();
 		      Exitcheck check4 = new Exitcheck();
-		      screen.GDChinh.getContentPane().removeAll();
-		      screen.GDChinh.revalidate();
-		      screen.createmenu();
+		      atmview.GDChinh.getContentPane().removeAll();
+		      atmview.GDChinh.revalidate();
+		      atmview.createmenu();
 		      Account Account1 = bankDatabase.getAccount(currentAccountNumber);
-		      screen.messageJLabel.setText("Welcome " + Account1.getUsername());
+		      atmview.messageJLabel.setText("Welcome " + Account1.getUsername());
 		      keypad.B1.addActionListener(check1);
 		      keypad.B2.addActionListener(check3);
 		      keypad.B3.addActionListener(check2);
 		      keypad.B4.addActionListener(check4);
-		      screen.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST); 
-		      screen.GDChinh.revalidate();
-		      screen.GDChinh.repaint();
+		      atmview.messageJLabel2.addActionListener(check1);
+		      atmview.messageJLabel3.addActionListener(check3);
+		      atmview.messageJLabel4.addActionListener(check2);
+		      atmview.messageJLabel5.addActionListener(check4);
+		      atmview.GDChinh.add(keypad.addkeypad(), BorderLayout.EAST);
+		      atmview.GDChinh.revalidate();
+		      atmview.GDChinh.repaint();
 		   }
 	  
 	   private class balancecheck implements ActionListener
@@ -204,149 +182,83 @@ public class ATM
 	   {
 		        
       Transaction currentTransaction = null;
-      
-     
+
                currentTransaction = 
                   createTransaction(a);
                keypad.setbuttons();
           	 addkeypadlisteners();
-          	 
-           
+  
            userinput = "";
-           screen.Inputfield2.setText(userinput);
+           atmview.Inputfield2.setText(userinput);
                currentTransaction.execute();
                
-               
-               
-               
                Backcheck Back = new Backcheck();
-               screen.Exit.addActionListener(Back);
-               screen.GDChinh.revalidate();
+               atmview.Exit.addActionListener(Back);
+               atmview.GDChinh.revalidate();
                
 	   }
 	   public class Backcheck implements ActionListener
 	   {
 	      public void actionPerformed( ActionEvent e )
-	      {
-	    	  
-	    	  
+	      {  
 	        createmenu();
-	        screen.GDChinh.add( keypad.addkeypad(), BorderLayout.CENTER);
-	        screen.GDChinh.revalidate();
+	        atmview.GDChinh.add( keypad.addkeypad(), BorderLayout.CENTER);
+	        atmview.GDChinh.revalidate();
 	        userinput="";
-	    	  screen.Inputfield2.setText(userinput);
+	    	  atmview.Inputfield2.setText(userinput);
 	      }
 	   }
-
-   
 	   private Transaction createTransaction(int type) {
 		      Transaction temp = null; 
-		      screen.getContentPane().removeAll();
-		      screen.revalidate();   
+		      atmview.getContentPane().removeAll();
+		      atmview.revalidate();   
 		      if (type == 1) {
-		         temp = new BalanceInquiry(currentAccountNumber, screen, bankDatabase);
+		         temp = new BalanceInquiry(currentAccountNumber, atmview, bankDatabase);
 		      } else if (type == 2) {
-		         temp = new Withdrawal(currentAccountNumber, screen, bankDatabase, keypad, cashDispenser);
+		         temp = new Withdrawal(currentAccountNumber, atmview, bankDatabase, keypad, cashDispenser);
 		      } else if (type == 3) {
-		         screen.setSize(500, 350); 
-		         temp = new Deposit(currentAccountNumber, screen, bankDatabase, keypad, depositSlot);
+		         atmview.setSize(530, 380); 
+		         temp = new Deposit(currentAccountNumber, atmview, bankDatabase, keypad, depositSlot);
 		      }
 		      return temp;
 		   }
 
-   public void createAdminGUI(){
-	   
-	   screen.GDChinh.getContentPane().removeAll();
-	   Nextcheck Ncheck = new Nextcheck();
-	   Prevcheck Pcheck = new Prevcheck();
-	   Exitcheck check4 = new Exitcheck();
-	   screen.GDChinh.revalidate();
-	   screen.createAdminpage();
-	   screen.button1.addActionListener(Ncheck);
-	   screen.button4.addActionListener(Pcheck);
-	   screen.Exit.addActionListener(check4);
-	   screen.GDChinh.revalidate();
-	   
-   }
    
    public void addkeypadlisteners(){
-	   BCheck BC = new BCheck();
+	   BtnClick BC = new BtnClick();
 	   BClear BC1 = new BClear();
 	   keypad.B1.addActionListener(BC);
-	  	 keypad.B2.addActionListener(BC);
-	  	keypad.B3.addActionListener(BC);
-	  	keypad.B4.addActionListener(BC);
-	  	keypad.B5.addActionListener(BC);
-	  	keypad.B6.addActionListener(BC);
-	  	keypad.B7.addActionListener(BC);
-	  	keypad.B8.addActionListener(BC);
-	  	keypad.B9.addActionListener(BC);
-	  	keypad.B0.addActionListener(BC);
-	  	keypad.BClear.addActionListener(BC1);
+	   keypad.B2.addActionListener(BC);
+	   keypad.B3.addActionListener(BC);
+	   keypad.B4.addActionListener(BC);
+	   keypad.B5.addActionListener(BC);
+	   keypad.B6.addActionListener(BC);
+	   keypad.B7.addActionListener(BC);
+	   keypad.B8.addActionListener(BC);
+	   keypad.B9.addActionListener(BC);
+	   keypad.B0.addActionListener(BC);
+	   keypad.BClear.addActionListener(BC1);
    }
    
-   public class BCheck implements ActionListener
+   public class BtnClick implements ActionListener
    {
       public void actionPerformed( ActionEvent e )
       {
-    	  JButton b = (JButton)e.getSource();
-		String label = b.getLabel();
+    	JButton b = (JButton)e.getSource();
+		String label = b.getText();
         userinput = userinput + label;
-        screen.Inputfield2.setText(userinput);
-        
+        atmview.Inputfield2.setText(userinput);      
       }
    }
    public class BClear implements ActionListener
    {
       public void actionPerformed( ActionEvent e)
       {
-
     	  userinput = "";
-    	  screen.Inputfield2.setText(userinput);
+    	  atmview.Inputfield2.setText(userinput);
       }
       }
-   
-   public class Nextcheck implements ActionListener
-   {
-      public void actionPerformed( ActionEvent e )
-      {
-    	  
-		IterateUser(BankDatabase.createIterator()); 
-      }
-      }
-   public class Prevcheck implements ActionListener
-   {
-      public void actionPerformed( ActionEvent e )
-      {
-    	  
-		prevIterateUser(BankDatabase.createIterator()); 
-      }
-      }
-   
-   public void IterateUser(Iterator Iterator){
-	  if(Iterator.hasNext(position) == true) {
-		  position = position + 1;
-		   Account AccountItem = (Account)Iterator.next(position);
-			screen.messageJLabel2.setText("Username: " + AccountItem.getUsername());
-			screen.messageJLabel3.setText("Avaliable Balance: " + AccountItem.getSoDu());
-			screen.messageJLabel4.setText("Avaliable Balance: " + AccountItem.getTongDu());
-			}
-	  
-		
-   }
-   	public void prevIterateUser(Iterator Iterator){
-		  if(Iterator.hasPrev(position) == true) {
-			  position = position - 1;
-			   Account AccountItem = (Account)Iterator.next(position);
-				screen.messageJLabel2.setText("Username: " + AccountItem.getUsername());
-				screen.messageJLabel3.setText("Avaliable Balance: " + AccountItem.getSoDu());
-				screen.messageJLabel4.setText("Avaliable Balance: " + AccountItem.getTongDu());
-								
-				}
-		  
-			
-	   }
-   
+
    	public static ATM getinstance() {
         if (uniqueinstance == null) {
            uniqueinstance = new ATM();
